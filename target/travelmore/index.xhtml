@@ -20,6 +20,14 @@
          <p:column headerText="Code">
             <h:outputText value="#{location.code}" />
          </p:column>
+
+          <p:column headerText="Delete">
+              <h:outputText value="#{location.id}" />
+              <h:form id="deleteLocationForm">
+                  <h:commandButton value="Delete" action="#{locationController.delete(location.id)}" update=":locationDataTable" />
+
+              </h:form>
+         </p:column>
       </p:dataTable>
       <h:form id="addLocationForm">
          <p:panel id="panel" header="Form" style="margin-bottom:10px;">
@@ -30,16 +38,6 @@
                <p:inputText id="locationCode" value="#{locationController.newLocation.code}">
                </p:inputText>
                <h:commandButton value="Toevoegen" action="#{locationController.submit}" update=":locationDataTable" />
-            </h:panelGrid>
-         </p:panel>
-      </h:form>
-      <h:form id="deleteLocationForm">
-         <p:panel id="panel2" header="Delete" style="margin-bottom:10px;">
-            <h:panelGrid columns="4" cellpadding="5">
-              <h:outputLabel for="locationID" value="id:" />
-               <p:inputText id="locationID" value="#{locationController.selectedLocationID}">
-               </p:inputText>
-               <h:commandButton value="Delete" action="#{locationController.delete}" update=":locationDataTable" />
             </h:panelGrid>
          </p:panel>
       </h:form>

@@ -42,8 +42,9 @@ public class LocationController {
         this.locationService.insert(newLocation);
     }
 
-    public void delete(){
-        this.locationService.delete(selectedLocationID);
+    public void delete(int id){
+      //  this.setSelectedLocationID(id);
+        this.locationService.delete(id);
     }
 
 }
