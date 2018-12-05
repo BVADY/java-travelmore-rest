@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by freman on 18/10/2018.
@@ -18,14 +19,21 @@ public class LocationRestService{
     private LocationService locationService;
 
     @GET
-    @Path("/getlocation")
+    @Path("/")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Location getLocationById(@QueryParam("id") int id) {
+    public List<Location> getLocations() {
+        return locationService.findAllLocations();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Location getLocationById(@PathParam("id") int id) {
         return locationService.findLocationById(id);
     }
 
     @POST
-    @Path("/addlocation")
+    @Path("/")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response addLocation(Location location) {
@@ -40,10 +48,22 @@ public class LocationRestService{
     }
 
     @DELETE
-    @Path("/deletelocation")
+    @Path("/{id}")
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public  Response deleteLocation(int id) {
+    public  Response deleteLocation(@PathParam("id") int id, @HeaderParam("Authorization") String authHeader) {
+        try {
+
+            if(!authHeader.equals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")){
+                return  Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .entity("Your are not permitted deleting this resource").build();
+            }
+        }catch (Exception err){
+            return  Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("Your are not permitted deleting this resource").build();
+        }
         if(null ==  locationService.findLocationById(id)){
             return Response
                     .status(Response.Status.NOT_FOUND)

@@ -1,5 +1,6 @@
 be\thomasmore\travelmore\controller\LocationController.class
 be\thomasmore\travelmore\service\LocationService.class
 be\thomasmore\travelmore\repository\LocationRepository.class
+be\thomasmore\travelmore\service\Configuration.class
 be\thomasmore\travelmore\domain\Location.class
 be\thomasmore\travelmore\rest\LocationRestService.class

@@ -22,7 +22,6 @@
          </p:column>
 
           <p:column headerText="Delete">
-              <h:outputText value="#{location.id}" />
               <h:form id="deleteLocationForm">
                   <h:commandButton value="Delete" action="#{locationController.delete(location.id)}" update=":locationDataTable" />
 
